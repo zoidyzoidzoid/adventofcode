@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 import fileinput
 
 steps = fileinput.input().readline().strip().split(', ')
 
-print('{} steps found'.format(len(steps)))
+print(f'{len(steps)} steps found')
 
 dir_x, dir_y = (0, 1)
 pos_x, pos_y = (0, 0)
