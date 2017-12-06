@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-import fileinput
-from collections import *
-from functools import *
-from itertools import *
-from math import *
+import bisect
+import heapq
+from collections import Counter, defaultdict, deque
+from functools import lru_cache, wraps
+from itertools import combinations, permutations
+from math import floor, sqrt
 
 
 def process(line):
     pass
 
+lines = []
 for line in fileinput.input():
-    line = line.strip()
-    print(process(line))
+    lines.append(line.strip())
+
+print(process(lines))
