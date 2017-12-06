@@ -14,7 +14,7 @@ def process(line):
     seen[tuple(blocks)] = 0
     steps = 1
     while True:
-        print('Step {}: {}'.format(steps - 1, ' '.join((str(i) for i in blocks))))
+        # print('Step {}: {}'.format(steps - 1, ' '.join((str(i) for i in blocks))))
         fullest = blocks.index(max(blocks)) - len(blocks)
         bucket = blocks[fullest]
         blocks[fullest] = 0
@@ -34,4 +34,4 @@ def process(line):
 
 lines = []
 for line in fileinput.input():
-    print(process(line.strip()))
+    process(line.strip())
