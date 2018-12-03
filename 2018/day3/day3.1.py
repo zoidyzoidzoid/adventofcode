@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
-import bisect
 import fileinput
-import heapq
-from collections import Counter, defaultdict, deque
-from functools import lru_cache, wraps
-from itertools import combinations, permutations
-from math import floor, sqrt
+from collections import defaultdict
 
 
 def process(lines):
@@ -19,16 +14,17 @@ def process(lines):
         x_l, y_l = int(x_l), int(y_l)
         for i in range(x, x + x_l):
             for j in range(y, y + y_l):
-                if grid['{},{}'.format(i, j)] == '':
-                    grid['{},{}'.format(i, j)] = claim
+                if grid[i, j] == '':
+                    grid[i, j] = claim
                 else:
-                    grid['{},{}'.format(i, j)] = 'X'
+                    grid[i, j] = 'X'
+
     result = 0
     for val in grid.values():
         if val == 'X':
             result += 1
+
     print(result)
-        
 
 
 lines = []

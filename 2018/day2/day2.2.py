@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
-import bisect
 import fileinput
-import heapq
-from collections import Counter, defaultdict, deque
-from functools import lru_cache, wraps
-from itertools import combinations, permutations
-from math import floor, sqrt
 
 
 def process(lines):
-    result = None
-    c2 = 0
-    c3 = 0
     for i, line in enumerate(lines[:-1]):
         for line2 in lines[i + 1:]:
             diffs = 0
