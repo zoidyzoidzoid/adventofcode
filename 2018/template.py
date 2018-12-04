@@ -3,16 +3,27 @@ import bisect
 import fileinput
 import heapq
 from collections import Counter, defaultdict, deque
+from datetime import datetime, timedelta
 from functools import lru_cache, wraps
 from itertools import combinations, permutations
 from math import floor, sqrt
 
 
-def process(line):
+def a(lines):
+    result = 0
+    for i, line in enumerate(lines):
+        print(line)
+    print(result)
+
+
+def b(lines):
     pass
+
 
 lines = []
 for line in fileinput.input():
     lines.append(line.strip())
 
-print(process(lines))
+
+a(lines)
+b(lines)
