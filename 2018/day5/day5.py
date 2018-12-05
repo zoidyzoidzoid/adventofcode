@@ -10,30 +10,21 @@ from math import floor, sqrt
 
 
 def a(lines):
-    line = lines[0]
-    l = line
-    while True:
-        operated = False
-        s = ''
-        ss = 0
-        i = 0
-        while i < len(l) - 1:
-            # print(l[i])
-            c = l[i]
-            d = l[i+1]
-            if c != d and c.lower() == d.lower():
-                s += l[ss:i]
-                ss = i + 2
-                operated = True
-                i += 2
-            else:
-                i += 1
-        print(s)
-        l = s + l[ss:]
-        if operated == False:
-            break
-    result = len(l)
-    print(result)
+    s = deque()
+    e = deque(lines[0])
+    while e:
+        y = e.popleft()
+        if s:
+            x = s.pop()
+        else:
+            x, y = y, e.popleft()
+        if x != y and x.lower() == y.lower():
+            continue
+        else:
+            s.append(x)
+            s.append(y)
+    print(len(s))
+    return len(s)
 
 
 def b(lines):
@@ -43,29 +34,23 @@ def b(lines):
     polymers = set(line.lower())
     for polymer in polymers:
         l = line.replace(polymer, '').replace(polymer.upper(), '')
-        while True:
-            operated = False
-            s = ''
-            ss = 0
-            i = 0
-            while i < len(l) - 1:
-                # print(l[i])
-                c = l[i]
-                d = l[i+1]
-                if c != d and c.lower() == d.lower():
-                    s += l[ss:i]
-                    ss = i + 2
-                    operated = True
-                    i += 2
-                else:
-                    i += 1
-            # print(s)
-            l = s + l[ss:]
-            if operated == False:
-                break
-        result = len(l)
+        s = deque()
+        e = deque(l)
+        while e:
+            y = e.popleft()
+            if s:
+                x = s.pop()
+            else:
+                x, y = y, e.popleft()
+            if x != y and x.lower() == y.lower():
+                continue
+            else:
+                s.append(x)
+                s.append(y)
+        result = len(s)
         mn = min((mn, result))
     print(mn)
+    return mn
 
 
 lines = []
@@ -73,5 +58,6 @@ for line in fileinput.input():
     lines.append(line.strip())
 
 
-a(lines)
-b(lines)
+# assert a(lines) == 10
+# assert a(lines) == 11118
+assert b(lines) == 6948
