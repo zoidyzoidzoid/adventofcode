@@ -35,8 +35,8 @@ def a(lines):
             attempts = 0
             mn = a
 
-            print('Second:', sec)
             if sec == 10333:
+                print('Second:', sec)
                 grid = [
                     ['.'] * (mx_x - mn_x + 1)
                     for i in range((mx_y - mn_y + 1))
