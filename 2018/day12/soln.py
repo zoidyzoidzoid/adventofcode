@@ -61,31 +61,21 @@ def a(lines):
     print(sum((k for k, v in state.items() if v == '#')))
 
 
-def print_gen(gen, state, l, r):
-    s = ''
-    for j in range(l, r):
-        s += state.get(j, '.')
-    s = s.strip('.')
-    return s
-    print('{:2d}: {}'.format(gen + 1, s))
-
-
 def b(lines):
     goal = 50000000000
     # goal = 20
-    result = 0
+
     state = dict(enumerate(lines[0].split(': ')[-1]))
-    global transitions
+
     transitions = {}
     for line in lines[2:]:
         cond, new = line.split(' => ')
         transitions[cond] = new
 
-    from pprint import pprint
-    pprint(transitions)
-    seen = set()
+    seen = {}
     attempts = 0
-    for i in range(goal):
+
+    for gen in range(goal):
         l = min(state) - 10
         r = max(state) + 10
 
@@ -94,33 +84,26 @@ def b(lines):
             s = ''
             for k in range(j-2, j+3):
                 s += state.get(k, '.')
-            v = transitions.get(s, '.')
+            v = transitions.get(s)
 
-            new_state[j] = v
+            if v is not None:
+                new_state[j] = v
 
-        s = print_gen(i, state, l, r)
-
+        s = ''
+        for j in range(l, r):
+            s += new_state.get(j, '.')
+        s = s.strip('.')
+        s = '....' + s + '....'
         if s in seen:
-            if attempts == 0:
-                result = i, sum((k for k, v in state.items() if v == '#'))
-            attempts += 1
-            if attempts > 10:
-                break
+            prev_gen, sm = seen[s]
+            diff = sum((k for k, v in new_state.items() if v == '#')) - sm
+            print(gen, prev_gen, sm, diff)
+            print(((goal - gen) * diff) + sm)
+            break
         else:
-            attempts = 0
-            seen.add(s)
-        state = new_state
-    else:
-        result = goal, sum((k for k, v in state.items() if v == '#'))
-    l = min(state)
-    r = max(state)
-    print(l, r)
-    s = ''
-    for j in range(l, r):
-        s += state.get(j, '.')
-    print(s.strip('.'))
-    print(*result)
+            seen[s] = gen, sum((k for k, v in new_state.items() if v == '#'))
 
+        state = new_state
 
 
 lines = []
