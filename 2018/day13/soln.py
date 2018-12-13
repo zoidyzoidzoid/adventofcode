@@ -200,9 +200,9 @@ def b(lines):
         return -y, x
 
     rots = {
-        'LEFT':     left,
+        'LEFT': left,
         'STRAIGHT': straight,
-        'RIGHT':    right,
+        'RIGHT': right,
     }
 
     x_l = -1
@@ -231,45 +231,48 @@ def b(lines):
     o_c = None
     while True:
         new_grid = grid.copy()
-        for x, y in sorted(grid, key=lambda x: x[1]):
+        for x, y in sorted(ints, key=lambda x: x[1]):
             c = grid[x, y]
-            if c in dirs:
-                d_x, d_y = dirs[c]
-                n_x, n_y = x + d_x, y + d_y
-                n_c = grid[n_x, n_y]
-                ints[n_x, n_y] = ints.pop((x, y))
-                if new_grid[n_x, n_y] in og:
-                    print('Crash!', new_grid[x, y], new_grid[n_x, n_y], x, y, n_x, n_y)
-                    new_grid[x, y] = original_grid[x, y]
-                    new_grid[n_x, n_y] = original_grid[n_x, n_y]
-                    grid[x, y] = original_grid[x, y]
-                    grid[n_x, n_y] = original_grid[n_x, n_y]
-                    continue
+            if c not in dirs:
+                ints.pop((x, y), None)
+                continue
+            d_x, d_y = dirs[c]
+            n_x, n_y = x + d_x, y + d_y
+            n_c = grid[n_x, n_y]
+            ints[n_x, n_y] = ints.pop((x, y))
+            if new_grid[n_x, n_y] in og:
+                print('Crash!', new_grid[x, y], new_grid[n_x, n_y], x, y, n_x, n_y)
                 new_grid[x, y] = original_grid[x, y]
-                if n_c == '+':
-                    rot = int_states[ints[n_x, n_y]]
-                    ints[n_x, n_y] = (ints[n_x, n_y] + 1) % 3
-                    new_grid[n_x, n_y] = dirs_l[rots[rot](d_x, d_y)]
-                elif n_c == '\\':
-                    if c == '>':
-                        new_grid[n_x, n_y] = 'v'
-                    elif c == '^':
-                        new_grid[n_x, n_y] = '<'
-                    elif c == '<':
-                        new_grid[n_x, n_y] = '^'
-                    elif c == 'v':
-                        new_grid[n_x, n_y] = '>'
-                elif n_c == '/':
-                    if c == '>':
-                        new_grid[n_x, n_y] = '^'
-                    elif c == '^':
-                        new_grid[n_x, n_y] = '>'
-                    elif c == '<':
-                        new_grid[n_x, n_y] = 'v'
-                    elif c == 'v':
-                        new_grid[n_x, n_y] = '<'
-                else:
-                    new_grid[n_x, n_y] = c
+                new_grid[n_x, n_y] = original_grid[n_x, n_y]
+                grid[x, y] = original_grid[x, y]
+                grid[n_x, n_y] = original_grid[n_x, n_y]
+                ints.pop((n_x, n_y))
+                continue
+            new_grid[x, y] = original_grid[x, y]
+            if n_c == '+':
+                rot = int_states[ints[n_x, n_y]]
+                ints[n_x, n_y] = (ints[n_x, n_y] + 1) % 3
+                new_grid[n_x, n_y] = dirs_l[rots[rot](d_x, d_y)]
+            elif n_c == '\\':
+                if c == '>':
+                    new_grid[n_x, n_y] = 'v'
+                elif c == '^':
+                    new_grid[n_x, n_y] = '<'
+                elif c == '<':
+                    new_grid[n_x, n_y] = '^'
+                elif c == 'v':
+                    new_grid[n_x, n_y] = '>'
+            elif n_c == '/':
+                if c == '>':
+                    new_grid[n_x, n_y] = '^'
+                elif c == '^':
+                    new_grid[n_x, n_y] = '>'
+                elif c == '<':
+                    new_grid[n_x, n_y] = 'v'
+                elif c == 'v':
+                    new_grid[n_x, n_y] = '<'
+            else:
+                new_grid[n_x, n_y] = c
 
         grid = new_grid
 
