@@ -1,4 +1,4 @@
-let solution ?file_name:(file=Sys.argv.(1)) () =
+let part_one ?file_name:(file=Sys.argv.(1)) () =
      let ic = open_in file in
      let result = ref 0.0 in
      let calc mass = (floor(mass /. 3.0) -. 2.0) in
@@ -16,5 +16,5 @@ let solution ?file_name:(file=Sys.argv.(1)) () =
      !result
 
 let () =
-        let _ = solution() in
+        let _ = part_one() in
                 ()
