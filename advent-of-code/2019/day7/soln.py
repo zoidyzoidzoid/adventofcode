@@ -44,7 +44,7 @@ async def solve(state, inp, out, last):
         op_code = int(command[-2:])
         # print('cmd:', command)
         if op_code not in PARS:
-            raise Excektion('Unknown op_code: {}'.format(op_code))
+            raise Exception('Unknown op_code: {}'.format(op_code))
 
         modes = ''.join(reversed(command[:-2]))
 
