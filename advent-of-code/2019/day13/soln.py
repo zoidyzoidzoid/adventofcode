@@ -76,7 +76,9 @@ def solve(state, test_code=None):
         mx_x = max(i[0] for i in grid.keys())
         mn_y = min(i[1] for i in grid.keys())
         mx_y = max(i[1] for i in grid.keys())
-        print('Score:', score)
+        rows = [
+                'Score: {}'.format(score)
+        ]
         for _y in range(mn_y, mx_y + 1):
             row = ''
             for _x in range(mn_x, mx_x + 2):
@@ -91,7 +93,10 @@ def solve(state, test_code=None):
                     row += '-'
                 elif c == '4':
                     row += 'o'
-            print(row)
+            rows.append(row)
+        import subprocess
+        subprocess.call('clear', shell=True)
+        print('\n'.join(rows))
 
     test_code = [test_code] or [1]
 
@@ -201,7 +206,7 @@ def solve(state, test_code=None):
                 i1, i2, i3 = outs[-3], outs[-2], outs[-1]
                 if i1 == -1 and i2 == 0:
                     score = i3
-                    print('Updating score to {}'.format(score))
+                    # print('Updating score to {}'.format(score))
                 else:
                     grid[i1, i2] = i3
                 if i3 == 3:
@@ -211,8 +216,8 @@ def solve(state, test_code=None):
                     if o_b_x is None:
                         o_b_x, o_b_y = i1 - 1, i2 + 1
                     b_x, b_y = i1, i2
-                # if i3 in (3, 4):
-                #     p_g()
+                if i3 in (3, 4):
+                    p_g()
 
             pos += PARS[op_code] + 1
         elif op_code == 5:
