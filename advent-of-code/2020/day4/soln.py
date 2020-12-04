@@ -16,25 +16,12 @@ def a(lines):
     lines = deque(lines)
     fields = {}
     while True:
-        try:
-            line = lines.popleft()
-        except IndexError:
-            line = ""
+        line = (lines and lines.popleft()) or ""
         if line == "":
-            # process_fields
-            if all(field in fields for field in [
-                    'byr',
-                    'iyr',
-                    'eyr',
-                    'hgt',
-                    'hcl',
-                    'ecl',
-                    'pid',
-                ]):
+            if len(set(fields.keys()).intersection({'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'})) == 7:
                 result += 1
             fields = {}
         else:
-            # add to fields
             for kv in line.split(' '):
                 k, _, v = kv.partition(':')
                 fields[k] = v
@@ -59,12 +46,8 @@ def b(lines):
     lines = deque(lines)
     fields = {}
     while True:
-        try:
-            line = lines.popleft()
-        except IndexError:
-            line = ""
+        line = (lines and lines.popleft()) or ""
         if line == "":
-            # process_fields
             if len(set(fields.keys()).intersection({'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'})) != 7:
                 fields = {}
                 continue
@@ -72,7 +55,6 @@ def b(lines):
                 result += 1
             fields = {}
         else:
-            # add to fields
             for kv in line.split(' '):
                 k, _, v = kv.partition(':')
                 fields[k] = v
