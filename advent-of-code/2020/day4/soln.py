@@ -43,47 +43,15 @@ def a(lines):
     print(result)
 
 
-def validate(fields):
-    if any(field not in fields for field in [
-            'byr',
-            'iyr',
-            'eyr',
-            'hgt',
-            'hcl',
-            'ecl',
-            'pid',
-        ]):
-        return 0
-    byr = fields['byr']
-    if len(byr) != 4 or int(byr) < 1920 or int(byr) > 2002:
-        return 0
-    iyr = fields['iyr']
-    if len(iyr) != 4 or int(iyr) < 2010 or int(iyr) > 2020:
-        return 0
-    eyr = fields['eyr']
-    if len(eyr) != 4 or int(eyr) < 2020 or int(eyr) > 2030:
-        return 0
-    hgt = fields['hgt']
-    if hgt.endswith('cm'):
-        hgt = int(hgt.replace('cm', ''))
-        if hgt < 150 or hgt > 193:
-            return 0
-    elif hgt.endswith('in'):
-        hgt = int(hgt.replace('in', ''))
-        if hgt < 59 or hgt > 76:
-            return 0
-    else:
-        return 0
-    hcl = fields['hcl']
-    if len(hcl) != 7 or any(i not in set('abcdef0123456789') for i in hcl.replace('#', '')):
-        return 0
-    ecl = fields['ecl']
-    if ecl not in set(('amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth')):
-        return 0
-    pid = fields['pid']
-    if len(pid) != 9 or not pid.isnumeric():
-        return 0
-    return 1
+vs = {
+    'byr': lambda x: len(x) == 4 and 1920 <= int(x) <= 2002,
+    'iyr': lambda x: len(x) == 4 and 2010 <= int(x) <= 2020,
+    'eyr': lambda x: len(x) == 4 and 2020 <= int(x) <= 2030,
+    'hgt': lambda x: (x.endswith('cm') and 150 <= int(x.replace('cm', '')) <= 193) or (x.endswith('in') and 59 <= int(x.replace('in', '')) <= 76),
+    'hcl': lambda x: len(x) == 7 and all(i in set('abcdef0123456789') for i in x.replace('#', '')),
+    'ecl': lambda x: x in {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'},
+    'pid': lambda x: len(x) == 9 and x.isnumeric(),
+}
 
 
 def b(lines):
@@ -97,7 +65,19 @@ def b(lines):
             line = ""
         if line == "":
             # process_fields
-            result += validate(fields)
+            if any(field not in fields for field in [
+                    'byr',
+                    'iyr',
+                    'eyr',
+                    'hgt',
+                    'hcl',
+                    'ecl',
+                    'pid',
+                ]):
+                fields = {}
+                continue
+            if all(vs.get(k, lambda x: True)(v) for k, v in fields.items()):
+                result += 1
             fields = {}
         else:
             # add to fields
