@@ -48,7 +48,7 @@ vs = {
     'iyr': lambda x: len(x) == 4 and 2010 <= int(x) <= 2020,
     'eyr': lambda x: len(x) == 4 and 2020 <= int(x) <= 2030,
     'hgt': lambda x: (x.endswith('cm') and 150 <= int(x.replace('cm', '')) <= 193) or (x.endswith('in') and 59 <= int(x.replace('in', '')) <= 76),
-    'hcl': lambda x: len(x) == 7 and all(i in set('abcdef0123456789') for i in x.replace('#', '')),
+    'hcl': lambda x: len(x) == 7 and len(x.lstrip('#')) == 6 and all(i in set('abcdef0123456789') for i in x.lstrip('#')),
     'ecl': lambda x: x in {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'},
     'pid': lambda x: len(x) == 9 and x.isnumeric(),
 }
@@ -65,15 +65,7 @@ def b(lines):
             line = ""
         if line == "":
             # process_fields
-            if any(field not in fields for field in [
-                    'byr',
-                    'iyr',
-                    'eyr',
-                    'hgt',
-                    'hcl',
-                    'ecl',
-                    'pid',
-                ]):
+            if len(set(fields.keys()).intersection({'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'})) != 7:
                 fields = {}
                 continue
             if all(vs.get(k, lambda x: True)(v) for k, v in fields.items()):
