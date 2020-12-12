@@ -23,10 +23,11 @@ def a(lines):
         else:
             break
     print(count[1], count[3] + 1, count[1] * (count[3] + 1))
-    return (start+3)
+    return start + 3
 
 
 graph = defaultdict(list)
+
 
 @lru_cache(maxsize=None)
 def traverse(pos, goal):
@@ -46,7 +47,7 @@ def traverse(pos, goal):
 def b(lines, goal):
     lines = list(sorted(lines))
     for i, x in enumerate(lines):
-        for y in lines[i + 1:]:
+        for y in lines[i + 1 :]:
             diff = y - x
             if diff <= 3:
                 graph[x].append(y)

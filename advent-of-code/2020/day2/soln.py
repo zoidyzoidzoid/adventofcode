@@ -14,9 +14,9 @@ from math import floor, sqrt
 def a(lines):
     result = 0
     for _, line in enumerate(lines):
-        x, _, z = line.partition(': ')
-        x, _, y = x.partition(' ')
-        l, _, r = x.partition('-')
+        x, _, z = line.partition(": ")
+        x, _, y = x.partition(" ")
+        l, _, r = x.partition("-")
         l, r = int(l), int(r)
         count = Counter(z)[y]
         if count >= l and count <= r:
@@ -27,9 +27,9 @@ def a(lines):
 def b(lines):
     result = 0
     for _, line in enumerate(lines):
-        x, _, z = line.partition(': ')
-        x, _, y = x.partition(' ')
-        l, _, r = x.partition('-')
+        x, _, z = line.partition(": ")
+        x, _, y = x.partition(" ")
+        l, _, r = x.partition("-")
         l, r = int(l) - 1, int(r) - 1
         if (z[l] == y and z[r] != y) or (z[l] != y and z[r] == y):
             result += 1

@@ -19,11 +19,11 @@ def a(lines):
         for i in range(6):
             # print(i, line[i], l, r)
             m = (l + r) // 2
-            if line[i] == 'F':
+            if line[i] == "F":
                 r = m
             else:
                 l = m + 1
-        if line[6] == 'F':
+        if line[6] == "F":
             row = l
         else:
             row = r
@@ -32,11 +32,11 @@ def a(lines):
         for i in range(7, 9):
             # print(i, line[i], l, r)
             m = (l + r) // 2
-            if line[i] == 'L':
+            if line[i] == "L":
                 r = m
             else:
                 l = m + 1
-        if line[9] == 'L':
+        if line[9] == "L":
             col = l
         else:
             col = r
@@ -54,11 +54,11 @@ def b(lines):
         for i in range(6):
             # print(i, line[i], l, r)
             m = (l + r) // 2
-            if line[i] == 'F':
+            if line[i] == "F":
                 r = m
             else:
                 l = m + 1
-        if line[6] == 'F':
+        if line[6] == "F":
             row = l
         else:
             row = r
@@ -67,11 +67,11 @@ def b(lines):
         for i in range(7, 9):
             # print(i, line[i], l, r)
             m = (l + r) // 2
-            if line[i] == 'L':
+            if line[i] == "L":
                 r = m
             else:
                 l = m + 1
-        if line[9] == 'L':
+        if line[9] == "L":
             col = l
         else:
             col = r

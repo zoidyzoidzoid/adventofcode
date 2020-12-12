@@ -17,10 +17,11 @@ def print_grid(data):
     print("=" * mx_x)
     for j in range(mx_y):
         for i in range(mx_x):
-            print(data[i, j], end='')
+            print(data[i, j], end="")
         print()
     print("=" * mx_x)
     print("=" * mx_x)
+
 
 dirs = {
     (1, 1),
@@ -32,6 +33,7 @@ dirs = {
     (-1, 0),
     (-1, -1),
 }
+
 
 def a(lines):
     data = {}
@@ -49,15 +51,15 @@ def a(lines):
                 for d_x, d_y in dirs:
                     d = data.get((x + d_x, y + d_y))
                     cnt[d] += 1
-                if c == 'L' and cnt['#'] == 0:
-                    nxt[x, y] = '#'
-                elif c == '#' and cnt['#'] >= 4:
-                    nxt[x, y] = 'L'
+                if c == "L" and cnt["#"] == 0:
+                    nxt[x, y] = "#"
+                elif c == "#" and cnt["#"] >= 4:
+                    nxt[x, y] = "L"
         if data == nxt:
             break
         data = nxt
     # print_grid(data)
-    print(Counter(data.values())['#'])
+    print(Counter(data.values())["#"])
 
 
 def b(lines):
@@ -77,19 +79,19 @@ def b(lines):
                     d = data.get((x + d_x, y + d_y))
                     cnt[d] += 1
                     i = 1
-                    while d not in (None, '#', 'L'):
+                    while d not in (None, "#", "L"):
                         i += 1
                         d = data.get((x + (d_x * i), y + (d_y * i)))
                         cnt[d] += 1
-                if c == 'L' and cnt['#'] == 0:
-                    nxt[x, y] = '#'
-                elif c == '#' and cnt['#'] >= 5:
-                    nxt[x, y] = 'L'
+                if c == "L" and cnt["#"] == 0:
+                    nxt[x, y] = "#"
+                elif c == "#" and cnt["#"] >= 5:
+                    nxt[x, y] = "L"
         if data == nxt:
             break
         data = nxt
     # print_grid(data)
-    print(Counter(data.values())['#'])
+    print(Counter(data.values())["#"])
 
 
 lines = []

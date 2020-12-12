@@ -21,7 +21,7 @@ def a(lines):
     while y + 1 < mx_y:
         x = (x + 3) % len(lines[0])
         y += 1
-        if lines[y][x] == '#':
+        if lines[y][x] == "#":
             p += 1
     print(p)
 
@@ -37,7 +37,7 @@ def b(lines):
         while y + 1 < mx_y:
             x = (x + d_x) % len(lines[0])
             y += 1
-            if lines[y][x] == '#':
+            if lines[y][x] == "#":
                 p += 1
         print(p)
         result *= p
@@ -47,7 +47,7 @@ def b(lines):
     while y + 2 < mx_y:
         x = (x + 1) % len(lines[0])
         y += 2
-        if lines[y][x] == '#':
+        if lines[y][x] == "#":
             p += 1
     print(p)
     result *= p

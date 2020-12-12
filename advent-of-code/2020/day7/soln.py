@@ -27,21 +27,21 @@ def traverse_a(start, seen=set()):
 def a(lines):
 
     for i, line in enumerate(lines):
-        line = line.rstrip('.')
-        a, _, b = line.partition(' contain ')
-        if b == 'no other bags':
+        line = line.rstrip(".")
+        a, _, b = line.partition(" contain ")
+        if b == "no other bags":
             continue
-        b = b.split(', ')
+        b = b.split(", ")
         for c in b:
-            if not c.endswith('s'):
-                c += 's'
-            n, c = c.split(' ', 1)
+            if not c.endswith("s"):
+                c += "s"
+            n, c = c.split(" ", 1)
             data[a][c] = int(n)
     # print(json.dumps(data, indent=2))
 
     result = 0
     for x, v in data.items():
-        if 'shiny gold bags' in traverse_a(x):
+        if "shiny gold bags" in traverse_a(x):
             result += 1
     print(result)
 
@@ -55,20 +55,20 @@ def traverse_b(start, n=0):
 
 def b(lines):
     for i, line in enumerate(lines):
-        line = line.rstrip('.')
-        a, _, b = line.partition(' contain ')
-        if b == 'no other bags':
+        line = line.rstrip(".")
+        a, _, b = line.partition(" contain ")
+        if b == "no other bags":
             continue
-        b = b.split(', ')
+        b = b.split(", ")
         for c in b:
-            if not c.endswith('s'):
-                c += 's'
-            n, c = c.split(' ', 1)
+            if not c.endswith("s"):
+                c += "s"
+            n, c = c.split(" ", 1)
             data[a][c] = int(n)
     print(json.dumps(data, indent=2))
 
     result = 0
-    result = traverse_b('shiny gold bags')
+    result = traverse_b("shiny gold bags")
     print(result)
 
 

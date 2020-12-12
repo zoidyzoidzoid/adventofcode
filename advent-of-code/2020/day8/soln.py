@@ -20,15 +20,15 @@ def a(lines):
             break
         seen.add(i)
         line = lines[i]
-        cmd, _, arg = line.partition( ' ')
+        cmd, _, arg = line.partition(" ")
         arg = int(arg)
         print(cmd, arg)
-        if cmd == 'nop':
+        if cmd == "nop":
             i += 1
-        elif cmd == 'acc':
+        elif cmd == "acc":
             result += arg
             i += 1
-        elif cmd == 'jmp':
+        elif cmd == "jmp":
             i += arg
     print(result)
 
@@ -37,14 +37,14 @@ def b(og_lines):
     swaps = [
         i
         for i, j in enumerate(og_lines)
-        if j.startswith('nop ') or j.startswith('jmp ')
+        if j.startswith("nop ") or j.startswith("jmp ")
     ]
     for swap in swaps:
         lines = og_lines.copy()
-        if 'jmp' in lines[swap]:
-            lines[swap] = lines[swap].replace('jmp', 'nop')
+        if "jmp" in lines[swap]:
+            lines[swap] = lines[swap].replace("jmp", "nop")
         else:
-            lines[swap] = lines[swap].replace('nop', 'jmp')
+            lines[swap] = lines[swap].replace("nop", "jmp")
         result = 0
         i = 0
         seen = set()
@@ -58,15 +58,15 @@ def b(og_lines):
                 break
             seen.add(i)
             line = lines[i]
-            cmd, _, arg = line.partition( ' ')
+            cmd, _, arg = line.partition(" ")
             arg = int(arg)
             # print(cmd, arg)
-            if cmd == 'nop':
+            if cmd == "nop":
                 i += 1
-            elif cmd == 'acc':
+            elif cmd == "acc":
                 result += arg
                 i += 1
-            elif cmd == 'jmp':
+            elif cmd == "jmp":
                 i += arg
 
 

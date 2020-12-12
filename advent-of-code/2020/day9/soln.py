@@ -25,7 +25,8 @@ def a(lines):
                     if x + y == line:
                         found = True
                         break
-                if found: break
+                if found:
+                    break
             if not found:
                 print(line)
                 return line
@@ -39,7 +40,7 @@ def b(lines, goal):
         sm = x
         mn = x
         mx = x
-        for y in lines[start+1:]:
+        for y in lines[start + 1 :]:
             sm += y
             mn = min((mn, y))
             mx = max((mx, y))
