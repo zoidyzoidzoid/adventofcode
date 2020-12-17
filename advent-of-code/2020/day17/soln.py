@@ -146,18 +146,20 @@ def a(lines):
 
             c = data.get((x, y, z), '.')
 
-            count = Counter()
+            cnt = 0
             for d_x, d_y, d_z in DIRS_2D:
-                count[data.get((x + d_x, y + d_y, z + d_z), '.')] += 1
+                d = data.get((x + d_x, y + d_y, z + d_z), '.')
+                if d == '#':
+                    cnt += 1
                 if c == '#' and (x + d_x, y + d_y, z + d_z) not in seen:
                     queue.add((x + d_x, y + d_y, z + d_z))
             if c == '#':
-                if count['#'] in (2, 3):
+                if cnt in (2, 3):
                     nxt[x, y, z] = '#'
                 else:
                     nxt.pop((x, y, z), None)
             elif c == '.':
-                if count['#'] == 3:
+                if cnt == 3:
                     nxt[x, y, z] = '#'
                 else:
                     nxt.pop((x, y, z), None)
@@ -185,21 +187,19 @@ def b(lines):
             x, y, z, w = queue.pop()
             seen.add((x, y, z, w))
             c = data.get((x, y, z, w), '.')
-            count = Counter()
+            cnt = 0
             for d_x, d_y, d_z, d_w in DIRS:
-                count[data.get((x + d_x, y + d_y, z + d_z, w + d_w), '.')] += 1
+                d = data.get((x + d_x, y + d_y, z + d_z, w + d_w), '.')
+                if d == '#':
+                    cnt += 1
                 if c == '#' and (x + d_x, y + d_y, z + d_z, w + d_w) not in seen:
                     queue.add((x + d_x, y + d_y, z + d_z, w + d_w))
-            if c == '#':
-                if count['#'] in (2, 3):
-                    nxt[x, y, z, w] = '#'
-                else:
-                    nxt.pop((x, y, z, w), None)
-            elif c == '.':
-                if count['#'] == 3:
-                    nxt[x, y, z, w] = '#'
-                else:
-                    nxt.pop((x, y, z, w), None)
+            if cnt == 3:
+                nxt[x, y, z, w] = '#'
+            elif cnt == 2 and c == '#':
+                nxt[x, y, z, w] = '#'
+            else:
+                nxt.pop((x, y, z, w), None)
 
         data = nxt
 
