@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from functools import lru_cache, wraps
 from itertools import combinations, permutations
 from math import floor, sqrt
+from time import time, time_ns
 
 
 def a(lines):
@@ -61,5 +62,20 @@ for line in fileinput.input():
     lines.append(line.strip())
 
 
-a(lines)
-b(lines)
+class Timer(object):
+    def __init__(self, description):
+        self.description = description
+    def __enter__(self):
+        self.start = time_ns()
+    def __exit__(self, type, value, traceback):
+        self.end = time_ns()
+        print("{}: {} µ".format(self.description, (self.end - self.start) / 1000))
+
+
+with Timer("Part 1"):
+    a(lines)
+
+
+with Timer("Part 2"):
+    b(lines)
+
