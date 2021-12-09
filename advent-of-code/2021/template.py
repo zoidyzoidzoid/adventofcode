@@ -28,14 +28,6 @@ for line in fileinput.input():
     lines.append(line.strip())
 
 
-with Timer("Part 1"):
-    a(lines)
-
-
-with Timer("Part 2"):
-    b(lines)
-
-
 class Timer(object):
     def __init__(self, description):
         self.description = description
@@ -56,3 +48,11 @@ class Timer(object):
         else:
             u = "ns"
         print("{}: {} {}".format(self.description, d, u))
+
+
+with Timer("Part 1"):
+    a(lines)
+
+
+with Timer("Part 2"):
+    b(lines)
