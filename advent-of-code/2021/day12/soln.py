@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from functools import lru_cache, wraps
 from itertools import combinations, permutations
 from math import floor, sqrt
-from time import time_ns
+from time import perf_counter_ns, time_ns
 
 
 def a(lines):
@@ -82,8 +82,53 @@ def b(lines):
                 # print("  to", next_step)
                 paths.add("{},{}".format(path, next_step))
     paths = [path for path in paths if path.endswith(",end")]
-    print("\n".join(paths))
+    # print("\n".join(paths))
     print(len(paths))
+
+
+def faster_b(lines):
+    nodes = defaultdict(list)
+    for i, line in enumerate(lines):
+        s, _, e = line.partition("-")
+        if e != "start":
+            nodes[s].append(e)
+        if s != "start":
+            nodes[e].append(s)
+
+    def next_steps(a, once, twice):
+        if a == "end":
+            return []
+        res = []
+        for nxt in nodes[a]:
+            if nxt.islower() and (nxt in twice or (nxt in once and twice)):
+                continue
+            res.append(nxt)
+        return res
+
+    # print(nodes)
+    queue = [
+        ("start", {"start"}, set())
+    ]
+    result = 0
+    while queue:
+        path, once, twice = queue.pop()
+        # print("Exploring from", path)
+        nxts = next_steps(path, once, twice)
+        for next_step in nxts:
+            # print("  to", next_step)
+            if next_step == "end":
+                result += 1
+            else:
+                new_once = once.copy()
+                new_twice = twice.copy()
+                if next_step.islower():
+                    if next_step in once:
+                        new_twice.add(next_step)
+                    else:
+                        new_once.add(next_step)
+                queue.append((next_step, new_once, new_twice))
+    # print("\n".join(paths))
+    print(result)
 
 
 lines = []
@@ -95,9 +140,9 @@ class Timer(object):
     def __init__(self, description):
         self.description = description
     def __enter__(self):
-        self.start = time_ns()
+        self.start = perf_counter_ns()
     def __exit__(self, type, value, traceback):
-        self.end = time_ns()
+        self.end = perf_counter_ns()
         d = self.end - self.start
         if d > 1_000_000_000:
             d /= 1_000_000_000
@@ -117,5 +162,8 @@ with Timer("Part 1"):
     a(lines)
 
 
-with Timer("Part 2"):
-    b(lines)
+with Timer("Part 2 (faster)"):
+    faster_b(lines)
+
+# with Timer("Part 2"):
+#     b(lines)
