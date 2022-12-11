@@ -9,11 +9,6 @@ function soln(inp) {
 }
 
 function soln2(inp) {
-    let result = 0
-    for (const item of inp.split("\n")) {
-        // console.log(item)
-    }
-    console.log(result)
 }
 
 const eg = ``
