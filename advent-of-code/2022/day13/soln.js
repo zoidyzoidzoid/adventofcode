@@ -6,15 +6,15 @@ function validate(left, right, depth = 0) {
         let l = left.shift()
         let r = right.shift()
         if (l === undefined) {
-            console.log(' '.repeat(depth) + `- Left side ran out of items, so inputs are in the right order`)
+            // console.log(' '.repeat(depth) + `- Left side ran out of items, so inputs are in the right order`)
             valid = true
             throw new Error('Valid packet')
         }
         if (r === undefined) {
-            console.log(' '.repeat(depth) + `- Right side ran out of items, so inputs are not in the right order`)
+            // console.log(' '.repeat(depth) + `- Right side ran out of items, so inputs are not in the right order`)
             throw new Error('Invalid packet')
         }
-        console.log(' '.repeat(depth + 1) + `- Compare ${l} vs ${r}`)
+        // console.log(' '.repeat(depth + 1) + `- Compare ${l} vs ${r}`)
         if (typeof l == 'object' && typeof r != 'object') {
             r = [r]
         }
@@ -27,46 +27,43 @@ function validate(left, right, depth = 0) {
             l = parseInt(l, 10)
             r = parseInt(r, 10)
             if (r > l) {
-                console.log(' '.repeat(depth + 2) + '- Left side is smaller, so inputs are in the right order')
+                // console.log(' '.repeat(depth + 2) + '- Left side is smaller, so inputs are in the right order')
                 valid = true
                 throw new Error('Valid packet')
             } else if (r == l) {
                 continue
             } else {
-                console.log(' '.repeat(depth + 2) + '- Right side is smaller, so inputs are not in the right order')
+                // console.log(' '.repeat(depth + 2) + '- Right side is smaller, so inputs are not in the right order')
                 throw new Error('Invalid packet')
             }
         }
     }
 }
 
-function soln(inp) {
+export function soln(inp) {
     let pair = 1
     let result = []
     for (const item of inp.split("\n\n")) {
-        console.log(`== Pair ${pair} == `)
+        // console.log(`== Pair ${pair} == `)
         let [left, right] = item.split("\n")
         left = eval(left)
         right = eval(right)
         try {
-            console.log(`- Compare ${left} vs ${right}`)
             valid = false
             validate(left, right)
-            if (left.length == 0 && right.length == 0) {
-                valid = true
-            }
         } catch (error) {
-            // console.error(error)
         }
         if (valid) {
             result.push(pair)
         }
         pair += 1
     }
-    console.log(result.reduce((acc, i) => { return acc + i }))
+    let ans = result.reduce((acc, i) => { return acc + i })
+    // console.log(ans)
+    return ans
 }
 
-function soln2(inp) {
+export function soln2(inp) {
     let valid = false
     function validate(left, right, depth = 0) {
         while (left.length > 0 || right.length > 0) {
@@ -123,30 +120,10 @@ function soln2(inp) {
             if (Array.isArray(elem)) {
                 copy.push(deepCopy(elem))
             } else {
-                if (typeof elem === 'object') {
-                    copy.push(deepCopyObject(elem))
-                } else {
-                    copy.push(elem)
-                }
+                copy.push(elem)
             }
         })
         return copy;
-    }
-    // Helper function to deal with Objects
-    const deepCopyObject = (obj) => {
-        let tempObj = {};
-        for (let [key, value] of Object.entries(obj)) {
-            if (Array.isArray(value)) {
-                tempObj[key] = deepCopy(value);
-            } else {
-                if (typeof value === 'object') {
-                    tempObj[key] = deepCopyObject(value);
-                } else {
-                    tempObj[key] = value
-                }
-            }
-        }
-        return tempObj;
     }
     function compare(a, b) {
         a = deepCopy(a)
@@ -156,9 +133,6 @@ function soln2(inp) {
         valid = false
         try {
             validate(a, b)
-            if (left.length == 0 && right.length == 0) {
-                valid = true
-            }
         } catch (error) { }
         if (valid) {
             gt = 1
@@ -166,9 +140,6 @@ function soln2(inp) {
         valid = false
         try {
             validate(b, a)
-            if (left.length == 0 && right.length == 0) {
-                valid = true
-            }
         } catch (error) { }
         if (valid) {
             lt = 1
@@ -198,11 +169,12 @@ function soln2(inp) {
     }
     a = parseInt(a, 10) + 1
     b = parseInt(b, 10) + 1
-    console.log(a, b)
-    console.log(a * b)
+    // console.log(a, b)
+    // console.log(a * b)
+    return a * b
 }
 
-const eg = `[1, 1, 3, 1, 1]
+export const eg = `[1, 1, 3, 1, 1]
 [1, 1, 5, 1, 1]
 
 [[1], [2, 3, 4]]
@@ -225,7 +197,7 @@ const eg = `[1, 1, 3, 1, 1]
 
 [1, [2, [3, [4, [5, 6, 7]]]], 8, 9]
 [1, [2, [3, [4, [5, 6, 0]]]], 8, 9]`
-// soln(eg)
-// soln(fs.readFileSync("input.txt").toString().trim())
-soln2(eg)
-soln2(fs.readFileSync("input.txt").toString().trim())
+console.log(soln(eg))
+console.log(soln(fs.readFileSync("input.txt").toString().trim()))
+console.log(soln2(eg))
+console.log(soln2(fs.readFileSync("input.txt").toString().trim()))
